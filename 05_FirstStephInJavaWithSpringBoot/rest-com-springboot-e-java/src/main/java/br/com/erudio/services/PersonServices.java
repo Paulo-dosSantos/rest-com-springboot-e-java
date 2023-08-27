@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.erudio.data.vo.v1.PersonVO;
+import br.com.erudio.data.vo.v2.PersonVOv2;
 import br.com.erudio.exceptions.ResourceNotFoundException;
 import br.com.erudio.mapper.DozerMapper;
+import br.com.erudio.mapper.custom.PersonMapper;
 import br.com.erudio.model.Person;
 import br.com.erudio.repositories.PersonRepository;
 
@@ -17,6 +19,9 @@ public class PersonServices {
 	
 	@Autowired
 	private PersonRepository repository;
+	
+	@Autowired
+	private PersonMapper mapper;
 	
 	private Logger logger=Logger.getLogger(PersonServices.class.getName());
 	
@@ -39,6 +44,12 @@ public class PersonServices {
 		logger.info("Criando uma pessoa");
 		var entity= DozerMapper.parseObject(person, Person.class);
 		var vo= DozerMapper.parseObject(repository.save(entity), PersonVO.class);
+		return vo;
+	}
+	public PersonVOv2 createV2(PersonVOv2 person) {
+		logger.info("Criando uma pessoa com v2");
+		var entity= mapper.convertVoToEntity(person);
+		var vo= mapper.convertEntityToVo(repository.save(entity));
 		return vo;
 	}
 	public void delete(Long id) {

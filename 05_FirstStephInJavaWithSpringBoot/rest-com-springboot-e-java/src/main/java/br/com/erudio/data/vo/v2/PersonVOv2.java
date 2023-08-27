@@ -1,26 +1,18 @@
-package br.com.erudio.data.vo.v1;
+package br.com.erudio.data.vo.v2;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-@JsonPropertyOrder({"id","firstName","lastName","gender","address"})
-public class PersonVO implements Serializable {
+public class PersonVOv2 implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	
 	private Long id;
 	
-	/*@JsonProperty("last_name")*/
+	
 	private String firstName;
 	
 
@@ -31,7 +23,9 @@ public class PersonVO implements Serializable {
 	
 	
 	private String gender;
-	public PersonVO() {
+	
+	private Date birthDay;
+	public PersonVOv2() {
 		
 		
 	
@@ -69,10 +63,18 @@ public class PersonVO implements Serializable {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+	
+	public Date getBirthDay() {
+		return birthDay;
+	}
+
+	public void setBirthDay(Date birthDay) {
+		this.birthDay = birthDay;
+	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(address, firstName, gender, id, lastName);
+		return Objects.hash(address, birthDay, firstName, gender, id, lastName);
 	}
 
 	@Override
@@ -83,11 +85,13 @@ public class PersonVO implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PersonVO other = (PersonVO) obj;
-		return Objects.equals(address, other.address) && Objects.equals(firstName, other.firstName)
-				&& Objects.equals(gender, other.gender) && Objects.equals(id, other.id)
-				&& Objects.equals(lastName, other.lastName);
+		PersonVOv2 other = (PersonVOv2) obj;
+		return Objects.equals(address, other.address) && Objects.equals(birthDay, other.birthDay)
+				&& Objects.equals(firstName, other.firstName) && Objects.equals(gender, other.gender)
+				&& Objects.equals(id, other.id) && Objects.equals(lastName, other.lastName);
 	}
+
+
 	
 	
 
